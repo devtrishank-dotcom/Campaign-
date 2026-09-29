@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>User Guide — Campaign Management System</title>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
+  :root{
+    --ink:#171717; --soft:#6f6a61; --gold:#b8872d; --gold-dark:#9a7026; --gold2:#e4bd63;
+    --champ:#f7ecd1; --cream:#fbf8f1; --line:#e8dfcf; --bg:#f2eee5; --paper:#fff;
+    --green:#506a54; --red:#a34d43; --sidebar:#171717;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",Arial,sans-serif;line-height:1.65}
+  h1,h2,h3,h4{font-family:"Playfair Display",serif;font-weight:600;margin:0}
+  a{color:var(--gold-dark);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{background:var(--cream);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:12.5px}
+
+  header.top{background:linear-gradient(160deg,#171717 0%,#2b2112 70%,#171717 100%);color:#fff;padding:44px 24px}
+  header.top .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:18px}
+  header.top .logo{width:64px;height:64px;flex-shrink:0}
+  header.top h1{font-size:clamp(26px,4vw,38px);color:#fff}
+  header.top .sub{color:#c9c3b6;font-size:14px;margin-top:4px}
+  header.top .btns{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:#b8872d;color:#fff;border:none;border-radius:11px;
+    padding:10px 16px;font-weight:600;font-size:13px;cursor:pointer;text-decoration:none}
+  .btn.ghost{background:transparent;border:1px solid rgba(228,189,99,.5);color:var(--gold2)}
+
+  .layout{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:250px 1fr;gap:28px;padding:28px 22px 60px}
+  @media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:static!important;max-height:none!important}}
+
+  .toc{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow-y:auto;
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .toc h4{font-size:13px;margin-bottom:8px;color:var(--gold-dark)}
+  .toc a{display:block;font-size:12.5px;color:var(--soft);padding:5px 8px;border-radius:8px}
+  .toc a:hover{background:var(--cream);color:var(--ink);text-decoration:none}
+
+  section{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-bottom:18px;scroll-margin-top:16px}
+  .kicker{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h2.title{font-size:clamp(20px,2.6vw,27px);margin:6px 0 12px}
+  h3{font-size:16px;margin:18px 0 6px;color:var(--gold-dark)}
+  p{color:#3d3a34;font-size:14px;margin:8px 0}
+  ol.steps{list-style:none;counter-reset:s;padding:0;margin:12px 0}
+  ol.steps>li{counter-increment:s;position:relative;padding:10px 0 10px 44px;border-bottom:1px dashed var(--line)}
+  ol.steps>li:last-child{border-bottom:none}
+  ol.steps>li::before{content:counter(s);position:absolute;left:0;top:10px;width:28px;height:28px;border-radius:50%;
+    background:var(--champ);color:var(--gold-dark);font-weight:700;font-size:13px;display:grid;place-items:center}
+  ul.clean{list-style:none;padding:0;margin:8px 0}
+  ul.clean li{padding:5px 0 5px 22px;position:relative;color:#3d3a34;font-size:14px}
+  ul.clean li::before{content:"";position:absolute;left:3px;top:12px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+  .note{border-radius:12px;padding:12px 14px;font-size:13.5px;margin:12px 0;border:1px solid var(--line);background:var(--cream)}
+  .note.tip{background:#eef6ef;border-color:#cfe0cd;color:#3f5c43}
+  .note.warn{background:#fdf3e6;border-color:#ecd3b0;color:#8a5a12}
+  .note b{color:inherit}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:10px 0}
+  th{background:var(--cream);text-align:left;padding:9px 13px;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--gold-dark)}
+  td{padding:9px 13px;border-top:1px solid var(--line)}
+  details{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:8px 0}
+  summary{cursor:pointer;font-weight:600;font-size:14px}
+  details p{margin:8px 0 0}
+  .footer{background:var(--sidebar);color:#b7b1a5;text-align:center;padding:28px 20px;font-size:13px}
+  .pill{display:inline-block;background:var(--champ);color:var(--gold-dark);border-radius:20px;padding:3px 11px;font-size:11.5px;font-weight:600}
+  @media print{header.top .btns,.toc{display:none}.layout{grid-template-columns:1fr}section{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <svg class="logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="6" width="88" height="88" rx="22" fill="#b8872d"/>
+      <path d="M50 20 L74 33 H26 Z" fill="#fff"/>
+      <rect x="30" y="40" width="5" height="26" fill="#fff"/><rect x="42" y="40" width="5" height="26" fill="#fff"/>
+      <rect x="54" y="40" width="5" height="26" fill="#fff"/><rect x="66" y="40" width="5" height="26" fill="#fff"/>
+      <rect x="26" y="70" width="48" height="5" fill="#fff"/>
+    </svg>
+    <div>
+      <h1>User Guide</h1>
+      <div class="sub">Step-by-step instructions for the Campaign Management System</div>
+    </div>
+    <div class="btns">
+      <a class="btn ghost" href="/presentation.html">Product Presentation</a>
+      <a class="btn" href="/">Open Admin Panel</a>
+      <button class="btn ghost" onclick="window.print()">Print / PDF</button>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- TOC -->
+  <aside class="toc">
+    <h4>Contents</h4>
+    <a href="#login">1. Sign in</a>
+    <a href="#branding">2. Company &amp; logo</a>
+    <a href="#theme">3. Theme</a>
+    <a href="#providers">4. Providers (Email/WA/SMS)</a>
+    <a href="#rules">5. Sending &amp; contact rules</a>
+    <a href="#contacts">6. Contacts</a>
+    <a href="#lists">7. Contact lists</a>
+    <a href="#categories">8. Template categories</a>
+    <a href="#templates">9. Templates</a>
+    <a href="#surveys">10. Surveys</a>
+    <a href="#campaigns">11. Campaigns</a>
+    <a href="#approval">12. Approval workflow</a>
+    <a href="#reports">13. Reports &amp; audit</a>
+    <a href="#roles">14. Roles</a>
+    <a href="#users">15. Users</a>
+    <a href="#tickets">16. Support tickets</a>
+    <a href="#profile">17. My profile</a>
+    <a href="#faq">18. FAQ</a>
+  </aside>
+
+  <main>
+    <section id="login">
+      <div class="kicker">Getting started</div>
+      <h2 class="title">1. Sign in</h2>
+      <ol class="steps">
+        <li>Open the admin panel URL (e.g. <code>http://localhost:5001</code>).</li>
+        <li>Enter your <b>email</b> and <b>password</b> and click <b>Sign in</b>.</li>
+        <li>You land on the <b>Dashboard</b> with quick stats and recent campaigns.</li>
+      </ol>
+      <div class="note">The first <b>Super Admin</b> is created with <code>npm run seed</code>. After that, create all other accounts from the panel.</div>
+    </section>
+
+    <section id="branding">
+      <div class="kicker">Settings</div>
+      <h2 class="title">2. Company &amp; logo</h2>
+      <p>Set your company identity — it appears in the sidebar and is used on tickets and emails.</p>
+      <ol class="steps">
+        <li>Go to <b>Settings</b>.</li>
+        <li>In <b>Company / Branding</b>, click the file field and upload a <b>logo</b> (png, jpg or svg, max 3MB).</li>
+        <li>Fill in <b>Company name, email, phone, website</b> and <b>Address</b>.</li>
+        <li>Click <b>Save company details</b>.</li>
+      </ol>
+      <div class="note tip"><b>Tip:</b> The <b>Company email</b> receives an alert whenever a user raises a support ticket.</div>
+    </section>
+
+    <section id="theme">
+      <div class="kicker">Settings</div>
+      <h2 class="title">3. Theme</h2>
+      <ol class="steps">
+        <li>In <b>Settings → Appearance</b>, click any of the 6 colour swatches.</li>
+        <li>The whole panel changes instantly and is saved to your account.</li>
+      </ol>
+      <div class="note">Sub-users inherit the admin's theme unless a different theme is set on their user.</div>
+    </section>
+
+    <section id="providers">
+      <div class="kicker">Settings</div>
+      <h2 class="title">4. Configure providers (Email / WhatsApp / SMS)</h2>
+      <p>You must configure a provider for each channel you want to send on. Credentials are stored encrypted.</p>
+      <ol class="steps">
+        <li>Go to <b>Settings → Providers</b>.</li>
+        <li>Pick a channel tab: <b>Email</b>, <b>WhatsApp</b> or <b>SMS</b>.</li>
+        <li>Click <b>Add Provider</b>, choose the provider type and fill its fields.</li>
+        <li>Click <b>Save</b>, then <b>Set active</b> (only one active provider per channel is used).</li>
+        <li>Click <b>Test</b>, enter a destination and send a test message.</li>
+      </ol>
+      <table>
+        <thead><tr><th>Channel</th><th>Provider options</th></tr></thead>
+        <tbody>
+          <tr><td>Email</td><td>SMTP, SendGrid, Custom HTTP API</td></tr>
+          <tr><td>WhatsApp</td><td>Meta Cloud API, Twilio, Custom HTTP API</td></tr>
+          <tr><td>SMS</td><td>Twilio, MSG91, Fast2SMS, Custom HTTP API</td></tr>
+        </tbody>
+      </table>
+      <div class="note"><b>Custom HTTP API</b> works with any third-party API: give the URL, method, headers and a body template using <code>{{to}}</code>, <code>{{message}}</code>, <code>{{subject}}</code>, <code>{{name}}</code>.</div>
+      <div class="note tip">For WhatsApp Meta, add a <b>Webhook Verify Token</b> so delivery status callbacks work.</div>
+    </section>
+
+    <section id="rules">
+      <div class="kicker">Settings</div>
+      <h2 class="title">5. Sending &amp; contact rules</h2>
+      <ol class="steps">
+        <li>In <b>Settings → Sending &amp; Contact Rules</b>, tick <b>Restrict sending to a time window</b> and pick start/end times.</li>
+        <li>Set a <b>Daily limit</b> (0 = unlimited).</li>
+        <li>Choose your <b>Timezone</b> and a <b>Default country code</b> for contacts.</li>
+        <li>Click <b>Save sending rules</b>.</li>
+      </ol>
+      <div class="note">If a campaign reaches the window or limit it is automatically <b>paused</b> and <b>resumes</b> when allowed.</div>
+    </section>
+
+    <section id="contacts">
+      <div class="kicker">Audience</div>
+      <h2 class="title">6. Contacts</h2>
+      <h3>Add one contact</h3>
+      <ol class="steps">
+        <li>Go to <b>Contacts</b> → <b>Add Contact</b>.</li>
+        <li>Enter name, email, phone, pick a country code and tags.</li>
+        <li>Click <b>Save</b>. Duplicate email/phone is blocked automatically.</li>
+      </ol>
+      <h3>Import from CSV / Excel</h3>
+      <ol class="steps">
+        <li>Click <b>Import</b>. Need the format? Click <b>Example</b> to download a template.</li>
+        <li>Choose your file (columns: <code>name, email, phone, whatsapp, countryCode, tags</code>).</li>
+        <li>Optionally add the contacts to a list, then click <b>Import</b>.</li>
+      </ol>
+      <h3>Export</h3>
+      <p>Use <b>Export CSV</b> or <b>Export Excel</b> to download all contacts (respects the list filter).</p>
+    </section>
+
+    <section id="lists">
+      <div class="kicker">Audience</div>
+      <h2 class="title">7. Contact lists</h2>
+      <ol class="steps">
+        <li>Go to <b>Contact Lists</b> → <b>New List</b>, give it a name and save.</li>
+        <li>When importing or creating contacts, assign them to lists.</li>
+        <li>Campaigns target one or more lists.</li>
+      </ol>
+    </section>
+
+    <section id="categories">
+      <div class="kicker">Content</div>
+      <h2 class="title">8. Template categories</h2>
+      <p>Categories are fully dynamic. Defaults are seeded the first time.</p>
+      <ol class="steps">
+        <li>Open <b>Templates → New Template</b> and click <b>Manage</b> next to Category.</li>
+        <li>Type a name and click <b>Add</b>. Click the <b>×</b> on a chip to delete one.</li>
+        <li>Click <b>Done</b> — your categories now appear in the dropdown.</li>
+      </ol>
+    </section>
+
+    <section id="templates">
+      <div class="kicker">Content</div>
+      <h2 class="title">9. Templates</h2>
+      <ol class="steps">
+        <li>Go to <b>Templates → New Template</b>.</li>
+        <li>Enter a name, choose the <b>channel</b> and a <b>category</b>.</li>
+        <li>Write the message using variables like <code>{{name}}</code>, <code>{{survey_link}}</code>, <code>{{unsubscribe_link}}</code>.</li>
+        <li>For email you can also add an HTML body (enables open/click tracking).</li>
+        <li>Click <b>Save</b>.</li>
+      </ol>
+    </section>
+
+    <section id="surveys">
+      <div class="kicker">Content</div>
+      <h2 class="title">10. Surveys (feedback forms)</h2>
+      <ol class="steps">
+        <li>Go to <b>Surveys → New Survey</b>, enter a title and create.</li>
+        <li>In the <b>Build</b> tab, add questions (single, multiple, yes/no, rating, text) and options.</li>
+        <li>Click <b>Save Survey</b>, then <b>Activate</b>.</li>
+        <li>Click <b>Copy public link</b> to share it, or attach the survey to a campaign.</li>
+        <li>Open the <b>Results</b> tab to see the summary and responses.</li>
+      </ol>
+    </section>
+
+    <section id="campaigns">
+      <div class="kicker">Campaigns</div>
+      <h2 class="title">11. Campaigns</h2>
+      <ol class="steps">
+        <li>Go to <b>Campaigns → New Campaign</b>.</li>
+        <li>Enter a name, pick the <b>channel</b> and optionally a <b>template</b>.</li>
+        <li>Write the message and select the target <b>lists</b> (click <b>Preview audience</b> to see reach).</li>
+        <li>Optionally attach a <b>survey</b> and/or set a <b>schedule</b>.</li>
+        <li>Click <b>Create Campaign</b>, then open it and click <b>Send now</b> (or it sends automatically when scheduled).</li>
+      </ol>
+      <h3>On the campaign page</h3>
+      <ul class="clean">
+        <li><b>Test send</b> — send one message to a number/email before the bulk.</li>
+        <li><b>Pause / Resume / Cancel</b> — control a running campaign.</li>
+        <li><b>Retry failed</b> — requeue failed recipients.</li>
+        <li><b>Export CSV</b> — download the recipient report.</li>
+      </ul>
+    </section>
+
+    <section id="approval">
+      <div class="kicker">Campaigns</div>
+      <h2 class="title">12. Approval workflow</h2>
+      <ol class="steps">
+        <li>If a user cannot approve (e.g. a Manager), their campaign is created as <b>pending approval</b>.</li>
+        <li>An <b>admin</b> opens the campaign and clicks <b>Approve</b> (or <b>Reject</b> with a reason).</li>
+        <li>Only approved campaigns can be sent. A rejected one can be fixed and re-submitted.</li>
+      </ol>
+    </section>
+
+    <section id="reports">
+      <div class="kicker">Insights</div>
+      <h2 class="title">13. Reports &amp; audit</h2>
+      <p><b>Reports</b> lists the audit trail of every action (who did what and when). Filter by action name.</p>
+      <p>Each campaign page shows live stats: total, sent, delivered, opened, clicked and failed.</p>
+    </section>
+
+    <section id="roles">
+      <div class="kicker">Administration</div>
+      <h2 class="title">14. Roles</h2>
+      <ol class="steps">
+        <li>Go to <b>Roles → New Role</b>.</li>
+        <li>Enter a name and tick the permissions this role should have.</li>
+        <li>Click <b>Save</b>. Assign this role to users from the Users page.</li>
+      </ol>
+      <div class="note">Built-in roles (<b>Super Admin, Admin, Manager, Viewer</b>) cannot be deleted. Only a Super Admin manages roles.</div>
+    </section>
+
+    <section id="users">
+      <div class="kicker">Administration</div>
+      <h2 class="title">15. Users</h2>
+      <ol class="steps">
+        <li>Go to <b>Users → New User</b>.</li>
+        <li>Enter name, email and password, choose a <b>Role</b> and optionally a <b>Colour theme</b>.</li>
+        <li>Click <b>Save</b> — the user receives a welcome email with their login details.</li>
+      </ol>
+      <h3>Bulk import / export</h3>
+      <ul class="clean">
+        <li><b>Example Excel</b> — download the template.</li>
+        <li><b>Import</b> — upload a <code>.csv</code> or <code>.xlsx</code> (columns: name, email, password, role).</li>
+        <li><b>Export CSV / Excel</b> — download the user list.</li>
+      </ul>
+      <div class="note"><b>Admins</b> can create Manager/Viewer/custom users. Only a <b>Super Admin</b> can create admins.</div>
+    </section>
+
+    <section id="tickets">
+      <div class="kicker">Support</div>
+      <h2 class="title">16. Support tickets</h2>
+      <ol class="steps">
+        <li>Go to <b>Support → Raise Ticket</b>.</li>
+        <li>Enter a subject, category, priority and describe the issue.</li>
+        <li>Click <b>Submit Ticket</b>. The company email gets an alert.</li>
+        <li>Open a ticket to read the thread and <b>reply</b>.</li>
+        <li>Admins can <b>Close</b> or <b>Reopen</b> a ticket.</li>
+      </ol>
+    </section>
+
+    <section id="profile">
+      <div class="kicker">Account</div>
+      <h2 class="title">17. My profile</h2>
+      <ol class="steps">
+        <li>Go to <b>My Profile</b> to see your details and permissions.</li>
+        <li>Use <b>Change Password</b> to update your password.</li>
+      </ol>
+    </section>
+
+    <section id="faq">
+      <div class="kicker">Help</div>
+      <h2 class="title">18. FAQ</h2>
+      <details><summary>My campaign shows “No reachable contacts”.</summary><p>The selected lists have no subscribed contacts with a valid email (email channel) or phone (WhatsApp/SMS). Add contacts to the list or import them.</p></details>
+      <details><summary>Messages are not sending.</summary><p>Check <b>Settings → Providers</b>: a provider must be <b>active</b> for that channel and its <b>Test</b> must pass. Also check the send window / daily limit.</p></details>
+      <details><summary>How do I make a user only see their own data?</summary><p>Data is isolated automatically per account. Create the user under the right admin — they will only see that account's data.</p></details>
+      <details><summary>Why is my campaign “pending approval”?</summary><p>Your role does not include <b>campaigns.approve</b>. An admin must approve it before it can be sent.</p></details>
+      <details><summary>How do I change the panel colours?</summary><p>Settings → <b>Appearance</b>, click a swatch. A Super Admin can also set a specific theme per user on the Users page.</p></details>
+      <details><summary>Emails are not being delivered to users.</summary><p>Ticket and welcome emails use the active <b>Email</b> provider. Configure and activate one in Settings → Providers.</p></details>
+    </section>
+  </main>
+</div>
+
+<div class="footer">
+  Campaign Management System · User Guide
+</div>
+
+</body>
+</html>
