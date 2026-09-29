@@ -257,7 +257,7 @@ Vite proxies `/api`, `/uploads`, `/t` and `/s` to the backend on port `5000`.
 | `JWT_EXPIRES_IN` | Token lifetime | `7d` |
 | `SETTINGS_ENCRYPTION_KEY` | Key to encrypt provider credentials | — |
 | `CORS_ORIGIN` | Allowed origins (comma separated) | `http://localhost:5001` |
-| `SUPER_ADMIN_NAME/EMAIL/PASSWORD` | Seed super admin | — |
+| `SUPER_ADMIN_NAME/EMAIL/PASSWORD` | Optional overrides for the auto-created super admin | `Super Admin` / `admin@example.com` / `Admin@12345` |
 | `SEND_DELAY_MS` | Delay between sends (rate limit) | `250` |
 | `MAX_CONCURRENT_CAMPAIGNS` | Campaigns processed at once | `2` |
 | `MAX_SEND_RETRIES` | Retries per message | `2` |
@@ -292,10 +292,11 @@ The backend also serves the built frontend, so the whole app runs as **one web s
    (`mongodb+srv://user:pass@cluster0.xxxx.mongodb.net/campaign_db?retryWrites=true&w=majority`).
 2. **New + → Blueprint** → select this repo → Render reads `render.yaml` and creates the service.
    *(Or New + → Web Service with Build Command `npm install --prefix backend && npm install --prefix frontend --include=dev && npm run build --prefix frontend` and Start Command `npm start --prefix backend`.)*
-3. Fill the required env vars: `MONGO_URI`, `SUPER_ADMIN_NAME`, `SUPER_ADMIN_EMAIL`, `SUPER_ADMIN_PASSWORD`.
-   `JWT_SECRET` and `SETTINGS_ENCRYPTION_KEY` are auto-generated. `PUBLIC_BASE_URL` is auto-detected from Render.
-4. After the first deploy, open the service **Shell** and run `npm run seed`.
-5. Open the service URL — the admin panel loads from the same origin as the API.
+3. The only required env var is **`MONGO_URI`** (MongoDB Atlas connection string). `JWT_SECRET` and
+   `SETTINGS_ENCRYPTION_KEY` are auto-generated; `PUBLIC_BASE_URL` is auto-detected from Render.
+4. Open the service URL — the admin panel loads from the same origin as the API.
+5. The first **super admin is created automatically in the database** on startup
+   (default `admin@example.com` / `Admin@12345` — **change the password after the first login**).
 
 > Free Render instances sleep after inactivity, so scheduled campaigns run only while the service is awake.
 

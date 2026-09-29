@@ -22,12 +22,6 @@ services:
         generateValue: true
       - key: CORS_ORIGIN
         value: "*"
-      - key: SUPER_ADMIN_NAME
-        sync: false
-      - key: SUPER_ADMIN_EMAIL
-        sync: false
-      - key: SUPER_ADMIN_PASSWORD
-        sync: false
       - key: SEND_DELAY_MS
         value: "250"
       - key: MAX_CONCURRENT_CAMPAIGNS
