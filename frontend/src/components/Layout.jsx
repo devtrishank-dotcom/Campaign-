@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../lib/auth";
-import api from "../lib/api";
+import api, { assetUrl } from "../lib/api";
 import Icon from "./Icon";
 import LiveClock from "./LiveClock";
 
@@ -67,7 +67,7 @@ export default function Layout() {
       <aside className={`sidebar ${open ? "open" : ""}`}>
         <div className="side-logo">
           {branding?.logoUrl && (
-            <img src={branding.logoUrl} alt={companyName} className="side-logo-img" />
+            <img src={assetUrl(branding.logoUrl)} alt={companyName} className="side-logo-img" />
           )}
           <span className="side-logo-text">{companyName}</span>
         </div>

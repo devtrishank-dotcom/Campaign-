@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import api from "../lib/api";
+import api, { API_ORIGIN } from "../lib/api";
 import { useToast } from "../lib/toast";
 import { useAuth } from "../lib/auth";
 import { Spinner, StatusBadge, Pagination, ProgressBar, Modal } from "../components/ui";
@@ -119,7 +119,7 @@ export default function CampaignDetail() {
 
   const exportCsv = () => {
     const token = localStorage.getItem("token");
-    const base = "/api";
+    const base = `${API_ORIGIN}/api`;
     fetch(`${base}/campaigns/${id}/recipients/export`, { headers: { Authorization: `Bearer ${token}` } })
       .then((r) => r.blob())
       .then((blob) => {

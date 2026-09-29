@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import api from "../lib/api";
+import api, { publicBase } from "../lib/api";
 import { useToast } from "../lib/toast";
 import { Spinner, StatusBadge, Empty } from "../components/ui";
 import Icon from "../components/Icon";
@@ -112,7 +112,7 @@ export default function SurveyDetail() {
   if (loading) return <Spinner />;
   if (!survey) return <div className="alert err">Survey not found</div>;
 
-  const publicUrl = `${window.location.origin}/s/${survey.slug}`;
+  const publicUrl = `${publicBase()}/s/${survey.slug}`;
 
   return (
     <div>

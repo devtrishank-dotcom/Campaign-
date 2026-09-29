@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../lib/api";
+import api, { assetUrl } from "../lib/api";
 import { useToast } from "../lib/toast";
 import { Modal, Spinner, Empty } from "../components/ui";
 import Icon from "../components/Icon";
@@ -304,7 +304,7 @@ export default function Settings() {
             <div style={{ flex: "0 0 auto", minWidth: 0 }}>
               {branding.logoUrl ? (
                 <img
-                  src={branding.logoUrl}
+                  src={assetUrl(branding.logoUrl)}
                   alt="logo"
                   style={{
                     height: 56,

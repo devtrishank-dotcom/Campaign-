@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../lib/api";
+import api, { publicBase } from "../lib/api";
 import { useToast } from "../lib/toast";
 import { Modal, Spinner, Empty, StatusBadge } from "../components/ui";
 import Icon from "../components/Icon";
@@ -58,7 +58,7 @@ export default function Surveys() {
   };
 
   const copyLink = (slug) => {
-    const url = `${window.location.origin}/s/${slug}`;
+    const url = `${publicBase()}/s/${slug}`;
     navigator.clipboard?.writeText(url);
     toast.success("Public link copied");
   };
