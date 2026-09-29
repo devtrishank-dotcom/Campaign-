@@ -19,6 +19,7 @@ import { UPLOADS_DIR } from "./middleware/upload.js";
 import { resumePendingCampaigns } from "./services/queue.js";
 import { startScheduler } from "./services/scheduler.js";
 import { ensureSystemRoles } from "./models/Role.js";
+import { User } from "./models/User.js";
 
 const app = express();
 
@@ -94,10 +95,25 @@ if (fs.existsSync(frontendDist)) {
 app.use(notFound);
 app.use(errorHandler);
 
+// Create the first super admin automatically (useful on hosts without a shell)
+async function ensureSuperAdmin() {
+  const count = await User.countDocuments({ role: "super_admin" });
+  if (count === 0) {
+    await User.create({
+      name: ENV.SUPER_ADMIN_NAME,
+      email: ENV.SUPER_ADMIN_EMAIL,
+      password: ENV.SUPER_ADMIN_PASSWORD,
+      role: "super_admin",
+    });
+    logger.info(`Created super admin: ${ENV.SUPER_ADMIN_EMAIL}`);
+  }
+}
+
 async function start() {
   try {
     await connectDB();
     await ensureSystemRoles();
+    await ensureSuperAdmin();
     await resumePendingCampaigns();
     startScheduler();
     app.listen(ENV.PORT, () => {
