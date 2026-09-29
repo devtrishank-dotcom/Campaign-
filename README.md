@@ -284,6 +284,23 @@ docker compose exec backend npm run seed
 
 ---
 
+## Deploy on Render (single service)
+
+The backend also serves the built frontend, so the whole app runs as **one web service** on a single URL.
+
+1. **Database** — create a free MongoDB Atlas cluster and copy the connection string
+   (`mongodb+srv://user:pass@cluster0.xxxx.mongodb.net/campaign_db?retryWrites=true&w=majority`).
+2. **New + → Blueprint** → select this repo → Render reads `render.yaml` and creates the service.
+   *(Or New + → Web Service with Build Command `npm install --prefix backend && npm install --prefix frontend --include=dev && npm run build --prefix frontend` and Start Command `npm start --prefix backend`.)*
+3. Fill the required env vars: `MONGO_URI`, `SUPER_ADMIN_NAME`, `SUPER_ADMIN_EMAIL`, `SUPER_ADMIN_PASSWORD`.
+   `JWT_SECRET` and `SETTINGS_ENCRYPTION_KEY` are auto-generated. `PUBLIC_BASE_URL` is auto-detected from Render.
+4. After the first deploy, open the service **Shell** and run `npm run seed`.
+5. Open the service URL — the admin panel loads from the same origin as the API.
+
+> Free Render instances sleep after inactivity, so scheduled campaigns run only while the service is awake.
+
+---
+
 ## Modules
 
 ### Dashboard

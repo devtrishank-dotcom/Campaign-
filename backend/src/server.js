@@ -1,4 +1,7 @@
 import express from "express";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -41,15 +44,20 @@ app.get("/health", (req, res) => {
   res.json({ success: true, status: "ok", time: new Date().toISOString() });
 });
 
-app.get("/", (req, res) => {
-  res.json({
-    success: true,
-    name: "Campaign Admin API",
-    message: "This is the backend API. Open the admin panel at http://localhost:5173",
-    health: "/health",
-    apiBase: "/api",
+// API info at root only when the frontend is not bundled (local dev)
+const __rootDir = path.dirname(fileURLToPath(import.meta.url));
+const __distDir = path.resolve(__rootDir, "../../frontend/dist");
+if (!fs.existsSync(__distDir)) {
+  app.get("/", (req, res) => {
+    res.json({
+      success: true,
+      name: "Campaign Admin API",
+      message: "Backend API. The admin panel runs on the Vite dev server (http://localhost:5001).",
+      health: "/health",
+      apiBase: "/api",
+    });
   });
-});
+}
 
 // Uploaded files (logos, etc.)
 app.use("/uploads", express.static(UPLOADS_DIR));
@@ -62,6 +70,26 @@ app.use("/t", trackingRoutes);
 
 // API
 app.use("/api", apiRoutes);
+
+// Serve the built frontend (single-service deployment, e.g. Render).
+// In local development the frontend runs on its own Vite dev server.
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const frontendDist = path.resolve(__dirname, "../../frontend/dist");
+if (fs.existsSync(frontendDist)) {
+  app.use(express.static(frontendDist));
+  app.get("*", (req, res, next) => {
+    if (
+      req.path.startsWith("/api") ||
+      req.path.startsWith("/t/") ||
+      req.path.startsWith("/s/") ||
+      req.path.startsWith("/uploads") ||
+      req.path === "/health"
+    ) {
+      return next();
+    }
+    res.sendFile(path.join(frontendDist, "index.html"));
+  });
+}
 
 app.use(notFound);
 app.use(errorHandler);
