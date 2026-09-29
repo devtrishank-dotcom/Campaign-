@@ -81,7 +81,6 @@ const STATUS_COLORS = {
   open: "amber",
   in_progress: "blue",
   resolved: "green",
-  closed: "red",
   low: "",
   normal: "blue",
   high: "amber",
